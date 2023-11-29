@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Dashboard from "./pages/dashboard/Dashboard";
+import Login from "./pages/login/Login";
+import Verify from "./pages/login/Verify";
+import { Suspense } from "react";
+import { LoginDetailProvider } from "./context/loginContext";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <LoginDetailProvider>
+              <Login />
+            </LoginDetailProvider>
+          }
+        />
+        <Route
+          path="/verify"
+          element={
+            <LoginDetailProvider>
+              <Verify />
+            </LoginDetailProvider>
+          }
+        />
+
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={"Something went wrong....."} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;
