@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import pauseIcon from "../../../assets/pause.svg";
 import forwardIcon from "../../../assets/playForward.svg";
 import playIcon from "../../../assets/triangle-play.png";
-import { dummyData } from "../../../assets/data";
+import { useSongListContext } from "../../../context/songContext";
 const Controls = ({
   audioRef,
   progressBarRef,
@@ -14,11 +14,12 @@ const Controls = ({
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const playAnimationRef = useRef();
+  const { songList } = useSongListContext();
 
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime || 0;
+    const currentTime = audioRef.current.currentTime;
     setTimeProgress(currentTime);
-    progressBarRef.current.value = currentTime || 0;
+    progressBarRef.current.value = currentTime;
     progressBarRef.current.style.setProperty(
       "--range-progress",
       `${(progressBarRef.current.value / duration) * 100}%`
@@ -27,22 +28,25 @@ const Controls = ({
     playAnimationRef.current = requestAnimationFrame(repeat);
   }, [audioRef, duration, progressBarRef, setTimeProgress]);
 
-  useEffect(() => {
+  const handlePlayback = () => {
     if (isPlaying && audioRef.current) {
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
     playAnimationRef.current = requestAnimationFrame(repeat);
-  }, [isPlaying, audioRef, repeat]);
+  };
 
+  useEffect(() => {
+    handlePlayback();
+  }, [isPlaying, audioRef, repeat]);
   const handlePrevious = () => {
-    let trackIndex = dummyData.findIndex((obj) => obj.id === currentTrack.id);
+    let trackIndex = songList.findIndex((obj) => obj.id === currentTrack.id);
     if (trackIndex === 0) {
-      let lastTrackIndex = dummyData.length - 1;
-      setCurrentTrack(dummyData[lastTrackIndex]);
+      let lastTrackIndex = songList.length - 1;
+      setCurrentTrack(songList[lastTrackIndex]);
     } else {
-      setCurrentTrack(dummyData[trackIndex - 1]);
+      setCurrentTrack(songList[trackIndex - 1]);
     }
   };
 

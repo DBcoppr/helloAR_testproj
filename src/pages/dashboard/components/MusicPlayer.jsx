@@ -1,20 +1,21 @@
 import React, { useRef, useState } from "react";
-import { dummyData } from "../../../assets/data";
 import Controls from "./Controls";
 import DisplayTrack from "./DisplayTrack";
 import ProgressBar from "./ProgressBar";
+import { useSongListContext } from "../../../context/songContext";
 function MusicPlayer({ setCurrentTrack, currentTrack }) {
   const audioRef = useRef();
   const progressBarRef = useRef();
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const { songList } = useSongListContext();
 
   const handleNext = () => {
-    let trackIndex = dummyData.findIndex((obj) => obj.id === currentTrack.id);
-    if (trackIndex >= dummyData.length - 1) {
-      setCurrentTrack(dummyData[0]);
+    let trackIndex = songList.findIndex((obj) => obj.id === currentTrack.id);
+    if (trackIndex >= songList.length - 1) {
+      setCurrentTrack(songList[0]);
     } else {
-      setCurrentTrack(dummyData[trackIndex + 1]);
+      setCurrentTrack(songList[trackIndex + 1]);
     }
   };
 

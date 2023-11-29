@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import SongsChart from "./components/SongsChart";
 import AddSongModal from "./components/AddSongModal";
-import { dummyData } from "../../assets/data";
 import MusicPlayer from "./components/MusicPlayer";
+import { useSongListContext } from "../../context/songContext";
 
 function Dashboard() {
   const [isOpenModal, setIsModalOpen] = useState(false);
+  const { songList } = useSongListContext();
   const [trackIndex, setTrackIndex] = useState(0);
-  const [currentTrack, setCurrentTrack] = useState(dummyData[trackIndex]);
+  const [currentTrack, setCurrentTrack] = useState(songList[trackIndex]);
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <div className="w-full h-screen flex">
       {isOpenModal && <AddSongModal closeModal={closeModal} />}

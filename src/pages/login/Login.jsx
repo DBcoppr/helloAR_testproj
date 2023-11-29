@@ -21,7 +21,6 @@ function Login() {
     } else {
       handleLogin(phone)
         .then((data) => {
-          console.log(data.data.requestId);
           setReqId(data.data.requestId);
           navigate("/verify");
         })

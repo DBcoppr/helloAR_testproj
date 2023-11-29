@@ -5,6 +5,7 @@ import Login from "./pages/login/Login";
 import Verify from "./pages/login/Verify";
 import { LoginDetailProvider } from "./context/loginContext";
 import PrivateRoute from "./components/PrivateRoute";
+import { SongListProvider } from "./context/songContext";
 
 export default function App() {
   return (
@@ -31,7 +32,9 @@ export default function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <SongListProvider>
+                <Dashboard />
+              </SongListProvider>
             </PrivateRoute>
           }
         />

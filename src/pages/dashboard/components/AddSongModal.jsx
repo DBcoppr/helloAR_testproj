@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import { useState } from "react";
-import { dummyData } from "../../../assets/data";
 import songPic from "../../../assets/songPic.png";
 import deleteIcon from "../../../assets/delete.svg";
+import { useSongListContext } from "../../../context/songContext";
 
 const AddSongModal = ({ closeModal }) => {
   const [songName, setSongName] = useState("");
+  const { setSongList } = useSongListContext();
   const [songLink, setSongLink] = useState("");
   const [songSource, setSongSource] = useState("");
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -14,10 +15,6 @@ const AddSongModal = ({ closeModal }) => {
   const handleFileInputChange = () => {
     const selectedFile = fileInputRef.current.files[0];
     setUploadedFile(selectedFile);
-  };
-
-  const openFileInput = () => {
-    fileInputRef.current.click();
   };
 
   const handleDeleteFile = () => {
@@ -42,7 +39,7 @@ const AddSongModal = ({ closeModal }) => {
         thumbnail: songPic,
         link: songLink,
       };
-      dummyData.push(newObj);
+      setSongList((prev) => [...prev, newObj]);
       closeModal();
     } else {
       alert("incomplete data");
