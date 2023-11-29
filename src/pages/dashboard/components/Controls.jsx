@@ -8,8 +8,7 @@ const Controls = ({
   progressBarRef,
   duration,
   setTimeProgress,
-  trackIndex,
-  setTrackIndex,
+  currentTrack,
   setCurrentTrack,
   handleNext,
 }) => {
@@ -38,19 +37,18 @@ const Controls = ({
   }, [isPlaying, audioRef, repeat]);
 
   const handlePrevious = () => {
+    let trackIndex = dummyData.findIndex((obj) => obj.id === currentTrack.id);
     if (trackIndex === 0) {
       let lastTrackIndex = dummyData.length - 1;
-      setTrackIndex(lastTrackIndex);
       setCurrentTrack(dummyData[lastTrackIndex]);
     } else {
-      setTrackIndex((prev) => prev - 1);
       setCurrentTrack(dummyData[trackIndex - 1]);
     }
   };
 
   return (
     <div>
-      <div>
+      <div className="flex gap-4">
         <button onClick={handlePrevious}>
           <img
             src={forwardIcon}
@@ -60,9 +58,9 @@ const Controls = ({
         </button>
         <button onClick={() => setIsPlaying(!isPlaying)}>
           {isPlaying ? (
-            <img src={playIcon} alt="play icon" className="w-5 h-5" />
+            <img src={pauseIcon} alt="pause icon" className="w-6 h-6" />
           ) : (
-            <img src={pauseIcon} alt="pause icon" />
+            <img src={playIcon} alt="play icon" className="w-5 h-5 " />
           )}
         </button>
         <button onClick={handleNext}>

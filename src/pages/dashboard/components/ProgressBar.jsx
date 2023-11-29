@@ -1,30 +1,16 @@
-const ProgressBar = ({ progressBarRef, timeProgress, duration, audioRef }) => {
+const ProgressBar = ({ progressBarRef, audioRef }) => {
   const handleProgressChange = () => {
     audioRef.current.currentTime = progressBarRef.current.value;
   };
-  const formatTime = (time) => {
-    if (time && !isNaN(time)) {
-      const minutes = Math.floor(time / 60);
-      const formatMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-      const seconds = Math.floor(time % 60);
-      const formatSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-      return `${formatMinutes}:${formatSeconds}`;
-    }
-    return "00:00";
-  };
   return (
     <div className="w-full flex">
-      <span className="time current">{formatTime(timeProgress)}</span>
-      <div className="w-full">
-        <input
-          type="range"
-          ref={progressBarRef}
-          defaultValue="0"
-          onChange={handleProgressChange}
-          className="w-full"
-        />
-      </div>
-      <span className="time">{formatTime(duration)}</span>
+      <input
+        type="range"
+        ref={progressBarRef}
+        defaultValue="0"
+        onChange={handleProgressChange}
+        className="w-full"
+      />
     </div>
   );
 };

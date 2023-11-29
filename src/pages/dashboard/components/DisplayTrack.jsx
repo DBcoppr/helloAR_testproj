@@ -12,7 +12,6 @@ function DisplayTrack({
     setDuration(seconds);
     progressBarRef.current.max = seconds || 0;
   };
-  console.log(audioRef);
   return (
     <div className="flex justify-between">
       <audio

@@ -33,6 +33,6 @@ export const dummyData = [
     source: "SoundCloud",
     createdAt: "12/03/23",
     thumbnail: songPic,
-    link: "https://soundcloud.com/audiorotica_records/hartshorn-funk-accelerator?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
+    link: song2,
   },
 ];
