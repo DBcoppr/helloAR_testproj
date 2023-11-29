@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { matchIsValidTel } from "mui-tel-input";
 import { useNavigate } from "react-router";
 import InputTel from "./component/InputTel";
@@ -6,20 +6,27 @@ import { useLoginContext } from "../../context/loginContext";
 import { handleLogin } from "./api";
 
 function Login() {
-  const { phone, updatePhone } = useLoginContext();
+  const { phone, updatePhone, setReqId } = useLoginContext();
   const navigate = useNavigate();
 
   const inputTel = (newValue) => {
-    updatePhone(newValue);
+    let phn = newValue.split(" ").join("");
+    updatePhone(phn);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (!matchIsValidTel(phone)) {
       alert("Incorrect phone format");
       return;
+    } else {
+      handleLogin(phone)
+        .then((data) => {
+          console.log(data.data.requestId);
+          setReqId(data.data.requestId);
+          navigate("/verify");
+        })
+        .catch((err) => console.log(err));
     }
-    console.log(handleLogin(phone));
-    navigate("/verify");
   };
 
   return (

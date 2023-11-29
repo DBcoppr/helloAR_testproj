@@ -16,9 +16,9 @@ const Controls = ({
   const playAnimationRef = useRef();
 
   const repeat = useCallback(() => {
-    const currentTime = audioRef.current.currentTime;
+    const currentTime = audioRef.current.currentTime || 0;
     setTimeProgress(currentTime);
-    progressBarRef.current.value = currentTime;
+    progressBarRef.current.value = currentTime || 0;
     progressBarRef.current.style.setProperty(
       "--range-progress",
       `${(progressBarRef.current.value / duration) * 100}%`

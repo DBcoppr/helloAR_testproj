@@ -1,6 +1,6 @@
 const ProgressBar = ({ progressBarRef, audioRef }) => {
   const handleProgressChange = () => {
-    audioRef.current.currentTime = progressBarRef.current.value;
+    audioRef.current.currentTime = progressBarRef.current.value || 0;
   };
   return (
     <div className="w-full flex">

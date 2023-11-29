@@ -1,10 +1,13 @@
 import React from "react";
 import dashboardLogo from "../../../assets/dashboardLogo.svg";
 import logoutLogo from "../../../assets/logout.svg";
+import { useNavigate } from "react-router-dom";
 
 function Sidebar() {
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    navigate("/");
   };
   return (
     <div className="w-[255px] h-screen bg-[#FFF] border-r-gray border">
@@ -19,11 +22,14 @@ function Sidebar() {
             className="pl-6 py-2.5"
           />
         </div>
-        <div className="flex gap-2.5 py-[9px] pl-6 w-full items-center">
-          <button onClick={handleLogout}>
-            <img src={logoutLogo} alt="dashboardicon" className="pl-6 py-2.5" />
+        <div className="w-full">
+          <button
+            onClick={handleLogout}
+            className="flex gap-2.5 py-[9px] pl-6 w-full items-center"
+          >
+            <img src={logoutLogo} alt="dashboardicon" className=" py-2.5" />
+            <p>Logout</p>
           </button>
-          <p>Logout</p>
         </div>
       </div>
     </div>
